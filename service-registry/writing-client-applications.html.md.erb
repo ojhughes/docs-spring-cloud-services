@@ -12,7 +12,7 @@ To register your application with a Service Registry service instance or use it 
 
 ## <a id="self-signed-ssl-certificate"></a>Add Self-Signed SSL Certificate to JVM Truststore
 
-Spring Cloud Services uses HTTPS for all client-to-service communication. If your [Pivotal Cloud Foundry&reg;](https://network.pivotal.io/products/pivotal-cf) (PCF) installation is using a self-signed SSL certificate, the certificate will need to be added to the JVM truststore before your application can be registered with a Service Registry service instance or consume a service that is registered with a Service Registry service instance.
+Spring Cloud&reg; Services uses HTTPS for all client-to-service communication. If your [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) installation is using a self-signed SSL certificate, the certificate will need to be added to the JVM truststore before your application can be registered with a Service Registry service instance or consume a service that is registered with a Service Registry service instance.
 
 Spring Cloud Services can add the certificate for you automatically. For this to work, you must set the ```CF_TARGET``` environment variable on your application to the API endpoint of your Elastic Runtime instance:
 
@@ -76,7 +76,7 @@ See below for information about the ```route``` and ```direct``` registration me
 
 #### Route Registration
 
-An application deployed to Pivotal Cloud Foundry&reg; can have one or more URLs, or "routes," bound to it. If you specify the ```route``` registration method, the application will be registered with the Service Registry instance using the first of these routes from the ```application_uris``` list in the application's ```VCAP_APPLICATION``` environment variable.
+An application deployed to Pivotal Cloud Foundry can have one or more URLs, or "routes," bound to it. If you specify the ```route``` registration method, the application will be registered with the Service Registry instance using the first of these routes from the ```application_uris``` list in the application's ```VCAP_APPLICATION``` environment variable.
 
 ```json
 {
@@ -87,7 +87,7 @@ An application deployed to Pivotal Cloud Foundry&reg; can have one or more URLs,
   ],
 ```
 
-Requests from client applications to this registered application go through the Pivotal Cloud Foundry&reg; Router, and the Router provides load balancing between the clients and registered applications.
+Requests from client applications to this registered application go through the Pivotal Cloud Foundry Router, and the Router provides load balancing between the clients and registered applications.
 
 <!---
 ```java
@@ -95,15 +95,15 @@ Requests from client applications to this registered application go through the 
 ```
 -->
 
-This registration method is compatible with all deployments of Pivotal Cloud Foundry&reg;.
+This registration method is compatible with all deployments of Pivotal Cloud Foundry.
 
 #### Direct Registration
 
-An application running on Pivotal Cloud Foundry&reg; is provided with an externally-accessible IP address and port, which are made available in two environment variables: ```CF_INSTANCE_IP``` and ```CF_INSTANCE_PORT```. If you specify the ```direct``` registration method, the application will be registered with the Service Registry instance using this IP address and port.
+An application running on Pivotal Cloud Foundry is provided with an externally-accessible IP address and port, which are made available in two environment variables: ```CF_INSTANCE_IP``` and ```CF_INSTANCE_PORT```. If you specify the ```direct``` registration method, the application will be registered with the Service Registry instance using this IP address and port.
 
-Requests from client applications to this registered application will not go through the Pivotal Cloud Foundry&reg; Router. You can provide client-side load balancing using [Spring Cloud and Netflix Ribbon](http://projects.spring.io/spring-cloud/docs/1.0.3/spring-cloud.html#spring-cloud-ribbon).
+Requests from client applications to this registered application will not go through the Pivotal Cloud Foundry Router. You can provide client-side load balancing using [Spring Cloud and Netflix Ribbon](http://projects.spring.io/spring-cloud/docs/1.0.3/spring-cloud.html#spring-cloud-ribbon).
 
-This registration method is only compatible with Pivotal Cloud Foundry&reg; version 1.5 or higher. In Pivotal Cloud Foundry&reg; Operations Manager, within the **Pivotal Elastic Runtime** tile's **Security Config**, the "Enable cross-container traffic within each DEA" or "Enable cross-container traffic" option must be enabled.
+This registration method is only compatible with Pivotal Cloud Foundry version 1.5 or higher. In Pivotal Cloud Foundry Operations Manager, within the **Pivotal Elastic Runtime** tile's **Security Config**, the "Enable cross-container traffic within each DEA" or "Enable cross-container traffic" option must be enabled.
 
 #### Specify a Registration Method
 
@@ -145,7 +145,7 @@ public class GreeterApplication {
 
 To call a registered service, a consuming application can use a URI with a hostname matching the name with which the service is registered in the Service Registry. This way, the consuming application does not need to know the service application's actual URL; the Registry will take care of finding and routing to the service.
 
-<p class='note'><strong>Important</strong>: If your <a href="https://network.pivotal.io/products/pivotal-cf">Pivotal Cloud Foundry&reg;</a> installation is configured to only allow HTTPS traffic, you must specify the <code>https://</code> scheme in the base URI used by your client application. For the below example, this means that you must change the base URI from <code>http://message-generation/greeting</code> to <code>https://message-generation/greeting</code>.</p>
+<p class='note'><strong>Important</strong>: If your <a href="https://network.pivotal.io/products/pivotal-cf">Pivotal Cloud Foundry</a> installation is configured to only allow HTTPS traffic, you must specify the <code>https://</code> scheme in the base URI used by your client application. For the below example, this means that you must change the base URI from <code>http://message-generation/greeting</code> to <code>https://message-generation/greeting</code>.</p>
 
 By default, Service Registry requires HTTPS for access to registered services. If your client application is consuming a service application which has been registered with the Service Registry instance using route registration (see the <a href="/spring-cloud-services/service-registry/writing-client-applications.html#register-the-application">Register the Application</a> section above), you have two options:
 

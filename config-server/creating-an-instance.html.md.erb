@@ -4,7 +4,7 @@ title: Creating an Instance
 
 <strong><%= modified_date %></strong>
 
-You can create a Config Server instance using either the cf Command Line Interface tool or [Pivotal Cloud Foundry&reg;](https://network.pivotal.io/products/pivotal-cf) (PCF) Apps Manager.
+You can create a Config Server instance using either the cf Command Line Interface tool or [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) Apps Manager.
 
 ## Using the cf CLI
 
@@ -90,11 +90,11 @@ In the **Services** list, click the **Manage** link under the listing for the ne
    <%= image_tag("config-server/4_service_successfully_added.png") %>
 
    Enter a repository URI. You can also enter:
-   
+
    * A branch name as the default "label" to be used if the Config Server receives a request without a label.
    * A pattern or comma-separated list of patterns which specifies how the Config Server searches for configuration-containing subdirectories in the repository (see the [Spring Cloud Config documentation on `searchPaths`](http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html#_git_backend)).
    * A username and password if the repository uses HTTP Basic authentication.
-   
+
    When the appropriate fields are filled out, hit the **Submit** button.
 
    <%= image_tag("config-server/dashboard.png") %>

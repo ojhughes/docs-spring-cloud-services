@@ -8,11 +8,11 @@ _Refer to the <a href="https://github.com/spring-cloud-samples/cook/tree/1.0.4">
 
 To use a Spring Boot application as a client for a Config Server instance, you must add the dependencies listed in the <a href="/spring-cloud-services/client-dependencies.html">Client Dependencies</a> topic to your application's build file. Be sure to include the dependencies for <a href="/spring-cloud-services/client-dependencies.html#config-server">Config Server</a> as well.
 
-<p class='note'><strong>Important</strong>: Because of a dependency on <a href="http://projects.spring.io/spring-security/">Spring Security</a>, the Spring Cloud Config Client starter will by default cause all application endpoints to be protected by HTTP Basic authentication. If you wish to disable this, please see <a href="#disable-http-basic-auth">Disable HTTP Basic Authentication</a> below.</p>
+<p class='note'><strong>Important</strong>: Because of a dependency on <a href="http://projects.spring.io/spring-security/">Spring Security</a>, the Spring Cloud&reg; Config Client starter will by default cause all application endpoints to be protected by HTTP Basic authentication. If you wish to disable this, please see <a href="#disable-http-basic-auth">Disable HTTP Basic Authentication</a> below.</p>
 
 ## <a id="self-signed-ssl-certificate"></a>Add Self-Signed SSL Certificate to JVM Truststore
 
-Spring Cloud Services uses HTTPS for all client-to-service communication. If your [Pivotal Cloud Foundry&reg;](https://network.pivotal.io/products/pivotal-cf) installation is using a self-signed SSL certificate, the certificate will need to be added to the JVM truststore before your client application can consume properties from a Config Server service instance.
+Spring Cloud Services uses HTTPS for all client-to-service communication. If your [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) installation is using a self-signed SSL certificate, the certificate will need to be added to the JVM truststore before your client application can consume properties from a Config Server service instance.
 
 Spring Cloud Services can add the certificate for you automatically. For this to work, you must set the ```CF_TARGET``` environment variable on your client application to the API endpoint of your Elastic Runtime instance:
 
@@ -213,8 +213,8 @@ Today's special is: Birdfeather Tea
 <p class='note'><strong>Note</strong>: Use of Config Server to serve encrypted configuration values for client-side decryption is available only in Spring Cloud Services 1.0.4 and later.</p>
 
 On the Config Server, the decryption features are disabled, so encrypted property values from a configuration source are delivered to client applications unmodified. You can use the decryption features of Spring Cloud Config Client to perform client-side decryption of encrypted values.
- 
-To use the decryption features in a client application, you must use a custom Java buildpack which contains the Java Cryptography Extension (JCE) Unlimited Strength policy files. Download the files from Oracle, fork the [Cloud Foundry Java buildpack](https://github.com/cloudfoundry/java-buildpack) on GitHub, and place the files in the `resources/open_jdk_jre/lib/security` directory. Then, following the instructions in the [Adding Buildpacks to Cloud Foundry](http://docs.pivotal.io/pivotalcf/adminguide/buildpacks.html) topic, add your custom buildpack to Pivotal Cloud Foundry&reg;. Make sure that it has the lowest position of all of the enabled Java buildpacks.
+
+To use the decryption features in a client application, you must use a custom Java buildpack which contains the Java Cryptography Extension (JCE) Unlimited Strength policy files. Download the files from Oracle, fork the [Cloud Foundry Java buildpack](https://github.com/cloudfoundry/java-buildpack) on GitHub, and place the files in the `resources/open_jdk_jre/lib/security` directory. Then, following the instructions in the [Adding Buildpacks to Cloud Foundry](http://docs.pivotal.io/pivotalcf/adminguide/buildpacks.html) topic, add your custom buildpack to Pivotal Cloud Foundry. Make sure that it has the lowest position of all of the enabled Java buildpacks.
 
 You must also include [Spring Security RSA](https://github.com/dsyer/spring-security-rsa) as a dependency and specify version 1.0.5.RELEASE of Spring Cloud Context in your client application's build file.
 
