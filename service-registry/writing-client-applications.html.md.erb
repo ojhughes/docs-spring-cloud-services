@@ -11,22 +11,6 @@ To register your application with a Service Registry service instance or use it 
 
 <p class='note'><strong>Important</strong>: Because of a dependency on <a href="http://projects.spring.io/spring-security/">Spring Security</a>, the Spring Cloud Services Starters for Service Registry will by default cause all application endpoints to be protected by HTTP Basic authentication. If you wish to disable this, please see <a href="#disable-http-basic-auth">Disable HTTP Basic Authentication</a> below.</p>
 
-## <a id="self-signed-ssl-certificate"></a>Add Self-Signed SSL Certificate to JVM Truststore
-
-Spring Cloud&reg; Services uses HTTPS for all client-to-service communication. If your [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) installation is using a self-signed SSL certificate, the certificate will need to be added to the JVM truststore before your application can be registered with a Service Registry service instance or consume a service that is registered with a Service Registry service instance.
-
-Spring Cloud Services can add the certificate for you automatically. For this to work, you must set the ```CF_TARGET``` environment variable on your application to the API endpoint of your Elastic Runtime instance:
-
-<pre class="terminal">
-$ cf set-env message-generation CF_TARGET https://api.cf.wise.com
-Setting env variable 'CF_TARGET' to 'https://api.cf.wise.com' for app message-generation in org myorg / space development as user...
-OK
-TIP: Use 'cf restage message-generation' to ensure your env variable changes take effect
-$ cf restage message-generation
-</pre>
-
-As the output from the ```cf set-env``` command suggests, restage the application after setting the environment variable.
-
 ## <a id="register-a-service"></a>Register a Service
 
 Follow the below instructions to register an application with a Service Registry service instance.
@@ -100,7 +84,7 @@ An application deployed to PCF can have one or more URLs, or "routes," bound to 
   "space_id": "0fa9f93a-d1fa-43c8-b11b-f95b7e36fd32",
   "space_name": "development",
   "uris": [
-   "message-generation.apps.wise.com"
+   "message-generation.wise.com"
   ],
 ```
 
@@ -116,13 +100,13 @@ This registration method is compatible with all deployments of PCF.
 
 #### Direct Registration
 
-<p class='note'><strong>Important</strong>: On PCF 1.7, network communication between containers in the same cell is not allowed. This makes direct registration unreliable, since applications registering to the service registry and client applications discovering the registered applications may be deployed to the same cell. Use of the direct registration method is therefore not recommended or supported on PCF 1.7.</p>
+<p class='note'><strong>Note</strong>: Direct registration cannot be used with Service Registry on Pivotal Web Services.</p>
 
 An application running on Pivotal Cloud Foundry is provided with an externally-accessible IP address and port, which are made available in two environment variables: ```CF_INSTANCE_IP``` and ```CF_INSTANCE_PORT```. If you specify the ```direct``` registration method, the application will be registered with the Service Registry instance using this IP address and port.
 
 Requests from client applications to this registered application will not go through the Pivotal Cloud Foundry Router. You can provide client-side load balancing using [Spring Cloud and Netflix Ribbon](http://projects.spring.io/spring-cloud/docs/1.0.3/spring-cloud.html#spring-cloud-ribbon).
 
-To enable direct registration, you must configure the PCF environment to allow traffic across containers or cells. In PCF 1.6, visit the Pivotal Cloud Foundry&reg; Operations Manager, click the **Pivotal Elastic Runtime** tile, and in the **Security Config** tab, ensure that the "Enable cross-container traffic" option is enabled. In PCF 1.7, [application security groups](http://docs.cloudfoundry.org/adminguide/app-sec-groups.html) must be configured to allow direct communication between applications across cells. Direct cross-cell communication is allowed by the default security groups created during Elastic Runtime installation.
+To enable direct registration, the PCF environment must be configured to allow traffic across containers or cells. For PCF 1.6, the "Enable cross-container traffic" option must be enabled in the **Security Config** tab of the Pivotal Elastic Runtime tile's settings in Pivotal Cloud Foundry Operations Manager. For PCF 1.7, [application security groups](http://docs.cloudfoundry.org/adminguide/app-sec-groups.html) must be configured to allow direct communication between applications across cells.
 
 #### Specify a Registration Method
 
@@ -171,8 +155,6 @@ public class GreeterApplication {
 To call a registered service, a consuming application can use a URI with a hostname matching the name with which the service is registered in the Service Registry. This way, the consuming application does not need to know the service application's actual URL; the Registry will take care of finding and routing to the service.
 
 <p class='note'><strong>Note</strong>: If the name of the registered application contains characters which are invalid in a hostname, that application will be registered with the Service Registry service instance using the application name with each invalid character replaced by a hyphen (<code>-</code>) character. For example, given an application name of "message_generation", the virtual hostname used to register the application with the Service Registry service instance will be <code>message-generation</code>. See the <a href="/spring-cloud-services/service-registry/connectors.html#eureka-virtual-hostname-configuration">Eureka Virtual Hostname Configuration</a> section of the <a href="/spring-cloud-services/service-registry/connectors.html">Spring Cloud Connectors</a> topic for more information.</p>
-
-<p class='note'><strong>Important</strong>: If your PCF installation is configured to only allow HTTPS traffic, you must specify the <code>https://</code> scheme in the base URI used by your client application. For the below example, this means that you must change the base URI from <code>http://message-generation/greeting</code> to <code>https://message-generation/greeting</code>.</p>
 
 By default, Service Registry requires HTTPS for access to registered services. If your client application is consuming a service application which has been registered with the Service Registry instance using route registration (see the <a href="/spring-cloud-services/service-registry/writing-client-applications.html#register-the-application">Register the Application</a> section above), you have two options:
 
@@ -227,10 +209,10 @@ The Message Generation application is registered with the Service Registry insta
 The Greeter application now responds with a customizable ```Greeting``` when you access its ```/hello``` endpoint.
 
 <pre class="terminal">
-$ curl http://greeter.apps.wise.com/hello
+$ curl http://greeter.wise.com/hello
 Hello, Bob!
 
-$ curl http://greeter.apps.wise.com/hello?name=John
+$ curl http://greeter.wise.com/hello?name=John
 Hello, John!
 </pre>
 
@@ -255,8 +237,6 @@ public class GreeterApplication {
 To call a registered service, a consuming application can use a URI with a hostname matching the name with which the service is registered in the Service Registry. This way, the consuming application does not need to know the service application's actual URL; the Registry will take care of finding and routing to the service.
 
 <p class='note'><strong>Note</strong>: If the name of the registered application contains characters which are invalid in a hostname, that application will be registered with the Service Registry service instance using the application name with each invalid character replaced by a hyphen (<code>-</code>) character. For example, given an application name of "message_generation", the virtual hostname used to register the application with the Service Registry service instance will be <code>message-generation</code>. See the <a href="/spring-cloud-services/service-registry/connectors.html#eureka-virtual-hostname-configuration">Eureka Virtual Hostname Configuration</a> section of the <a href="/spring-cloud-services/service-registry/connectors.html">Spring Cloud Connectors</a> topic for more information.</p>
-
-<p class='note'><strong>Important</strong>: If your PCF installation is configured to only allow HTTPS traffic, you must specify the <code>https://</code> scheme in the base URI used by your client application. For the below example, this means that you must change the base URI from <code>http://message-generation/greeting</code> to <code>https://message-generation/greeting</code>.</p>
 
 By default, Service Registry requires HTTPS for access to registered services. If your client application is consuming a service application which has been registered with the Service Registry instance using route registration (see the <a href="/spring-cloud-services/service-registry/writing-client-applications.html#register-the-application">Register the Application</a> section above), you have two options:
 
@@ -312,10 +292,10 @@ The Message Generation application is registered with the Service Registry insta
 The Greeter application now responds with a customizable ```Greeting``` when you access its ```/hello``` endpoint.
 
 <pre class="terminal">
-$ curl http://greeter.apps.wise.com/hello
+$ curl http://greeter.wise.com/hello
 Hello, Bob!
 
-$ curl http://greeter.apps.wise.com/hello?name=John
+$ curl http://greeter.wise.com/hello?name=John
 Hello, John!
 </pre>
 

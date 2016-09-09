@@ -11,23 +11,6 @@ To use a Spring Boot application as a client for a Config Server instance, you m
 
 <p class='note'><strong>Important</strong>: Because of a dependency on <a href="http://projects.spring.io/spring-security/">Spring Security</a>, the Spring Cloud&reg; Config Client starter will by default cause all application endpoints to be protected by HTTP Basic authentication. If you wish to disable this, please see <a href="#disable-http-basic-auth">Disable HTTP Basic Authentication</a> below.</p>
 
-## <a id="self-signed-ssl-certificate"></a>Add Self-Signed SSL Certificate to JVM Truststore
-
-Spring Cloud Services uses HTTPS for all client-to-service communication. If your [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) installation is using a self-signed SSL certificate, the certificate will need to be added to the JVM truststore before your client application can consume properties from a Config Server service instance.
-
-Spring Cloud Services can add the certificate for you automatically. For this to work, you must set the ```CF_TARGET``` environment variable on your client application to the API endpoint of your Elastic Runtime instance:
-
-<pre class="terminal">
-$ cf set-env cook CF_TARGET https://api.cf.wise.com
-Setting env variable 'CF_TARGET' to 'https://api.cf.wise.com' for app cook in org myorg / space development as user...
-OK
-TIP: Use 'cf restage' to ensure your env variable changes take effect
-
-$ cf restage cook
-</pre>
-
-As the output from the ```cf set-env``` command suggests, restage the application after setting the environment variable.
-
 ## <a id="use-configuration-values"></a>Use Configuration Values
 
 When the application requests a configuration from the Config Server, it will use a path containing the application name (as described in the <a href="/spring-cloud-services/config-server/configuration-clients.html">Configuration Clients</a> topic). You can declare the application name in `bootstrap.properties`, `bootstrap.yml`, `application.properties`, or `application.yml`.
@@ -305,9 +288,9 @@ After making the key available to the application and installing the JCE policy 
 
 <pre class="terminal">
 $ cf set-env cook SPRING_PROFILES_ACTIVE dev,encryption
-Setting env variable 'SPRING_PROFILES_ACTIVE' to 'dev,encryption' for app cook in org myorg / space development as user...
+Setting env variable 'SPRING_PROFILES_ACTIVE' to 'dev,encryption' for app cook in org myorg / space development as username@example.com...
 OK
-TIP: Use 'cf restage' to ensure your env variable changes take effect
+TIP: Use 'cf restage cook' to ensure your env variable changes take effect
 
 $ cf restage cook
 </pre>

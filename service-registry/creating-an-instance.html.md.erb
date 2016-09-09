@@ -16,8 +16,8 @@ Target the correct org and space:
 <pre class="terminal">
 $ cf target -o myorg -s development
 
-API endpoint:   https://api.cf.wise.com (API version: 2.43.0)
-User:           user
+API endpoint:   https://api.run.pivotal.io (API version: 2.61.0)
+User:           username@example.com
 Org:            myorg
 Space:          development
 </pre>
@@ -26,7 +26,7 @@ You can view plan details for the Config Server product by running `cf marketpla
 
 <pre class="terminal">
 $ cf marketplace
-Getting services from marketplace in org myorg / space development as user...
+Getting services from marketplace in org myorg / space development as username@example.com...
 OK
 
 service                       plans          description
@@ -37,7 +37,7 @@ p-service-registry            standard       Service Registry for Spring Cloud A
 TIP:  Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
 
 $ cf marketplace -s p-service-registry
-Getting service plan information for service p-service-registry as user...
+Getting service plan information for service p-service-registry as username@example.com...
 OK
 
 service plan   description     free or paid
@@ -50,7 +50,7 @@ To create an instance with a single node, run:
 
 <pre class="terminal">
 $ cf create-service p-service-registry standard service-registry
-Creating service instance service-registry in org myorg / space development as admin...
+Creating service instance service-registry in org myorg / space development as username@example.com...
 OK
 
 Create in progress. Use 'cf services' or 'cf service service-registry' to check operation status.
@@ -60,7 +60,7 @@ To create an instance with three nodes, run:
 
 <pre class="terminal">
 $ cf create-service p-service-registry standard service-registry -c '{"count": 3}'
-Creating service instance service-registry in org myorg / space development as admin...
+Creating service instance service-registry in org myorg / space development as username@example.com...
 OK
 
 Create in progress. Use 'cf services' or 'cf service service-registry' to check operation status.
@@ -73,42 +73,18 @@ $ cf service service-registry
 
 Service instance: service-registry
 Service: p-service-registry
-Bound apps:
-Tags:
+Bound apps: agency,company
+Tags: 
 Plan: standard
 Description: Service Registry for Spring Cloud Applications
 Documentation url: http://docs.pivotal.io/spring-cloud-services/
-Dashboard: https://spring-cloud-broker.apps.wise.com/dashboard/p-service-registry/50f247f4-fcb0-43c9-863c-94e21be2051c
+Dashboard: https://spring-cloud-service-broker.cfapps.io/dashboard/p-service-registry/01460799-7ba8-4775-ba63-5b3f6c350d6c
 
 Last Operation
 Status: create succeeded
-Message:
-Started: 2016-06-27T23:14:44Z
-Updated:
+Message: 
+Started: 2016-09-09T14:39:09Z
+Updated: 2016-09-09T14:42:20Z
 </pre>
-
-<p class='note'><strong>Note</strong>: You may notice a discrepancy between the status given for a service instance by the cf CLI (e.g., by the <code>cf service</code> command) versus that shown on the <a href="/spring-cloud-services/operator-information.html#service-instances-dashboard">Service Instances dashboard</a>. The dashboard is updated frequently (close to real-time); the status retrieved by the cf CLI is not updated as frequently and may take time to match the dashboard.</p>
-
-## <a id="using-apps-manager"></a>Using Apps Manager
-
-Log into Apps Manager as a Space Developer. In the Marketplace, select **Service Registry**.
-
-<%= image_tag("service-registry/marketplace.png") %>
-
-Select the desired plan for the new service instance.
-
-<%= image_tag("service-registry/select_plan.png") %>
-
-Provide a name for the service instance (for example, "service-registry"). Click the **Add** button.
-
-<%= image_tag("service-registry/instance_name.png") %>
-
-In the **Services** list, click the **Manage** link under the listing for the new service instance.
-
-<%= image_tag("service-registry/service_successfully_added.png") %>
-
-It may take a few minutes to provision the service instance; while it is being provisioned, you will see a "The service instance is initializing" message. When the instance is ready, its dashboard will load automatically.
-
-<%= image_tag("service-registry/dashboard_more.png") %>
 
 For information about registering an application with a Service Registry service instance, see the <a href="/spring-cloud-services/service-registry/writing-client-applications.html">Writing Client Applications</a> topic.
