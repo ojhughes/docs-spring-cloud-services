@@ -133,8 +133,8 @@ dependencies {
 If binding your application to a Service Registry service instance that has one or more peers in another PCF deployment which uses self-signed certificates, you must set the `TRUST_CERTS` environment variable on your application to a hostname on the other PCF deployment in order for your application to communicate with applications bound to those Service Registry peers:
 
 <pre class="terminal">
-$ cf set-env message-generation TRUST_CERTS api.cf.otherwise.com
-Setting env variable 'TRUST_CERTS' to 'api.cf.otherwise.com' for app message-generation in org myorg / space development as user...
+$ cf set-env message-generation TRUST_CERTS api.otherwise.com
+Setting env variable 'TRUST_CERTS' to 'api.otherwise.com' for app message-generation in org myorg / space development as username@example.com...
 OK
 TIP: Use 'cf restage message-generation' to ensure your env variable changes take effect
 </pre>
@@ -142,8 +142,8 @@ TIP: Use 'cf restage message-generation' to ensure your env variable changes tak
 The `TRUST_CERTS` environment variable can contain multiple hostnames, in case (e.g.) the Service Registry has peers in multiple alternate PCF deployments with self-signed certificates. Hostnames are comma-separated:
 
 <pre class="terminal">
-$ cf set-env message-generation TRUST_CERTS api.cf.otherwise.com,api.verywise.com
-Setting env variable 'TRUST_CERTS' to 'api.cf.otherwise.com,api.verywise.com' for app message-generation in org myorg / space development as user...
+$ cf set-env message-generation TRUST_CERTS api.otherwise.com,api.verywise.com
+Setting env variable 'TRUST_CERTS' to 'api.otherwise.com,api.verywise.com' for app message-generation in org myorg / space development as username@example.com...
 OK
 TIP: Use 'cf restage message-generation' to ensure your env variable changes take effect
 </pre>
