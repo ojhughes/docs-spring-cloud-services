@@ -130,7 +130,7 @@ dependencies {
 
 ## <a id="peers-with-self-signed-certificates"></a>Service Registry Peers with Self-Signed Certificates
 
-If binding your application to a Service Registry service instance that has one or more peers in another PCF deployment which uses self-signed certificates, you must set the `TRUST_CERTS` environment variable on your application to a hostname on the other PCF deployment in order for your application to communicate with applications bound to those Service Registry peers:
+If binding your application to a Service Registry service instance that has one or more peers in another [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) deployment which uses self-signed certificates, you must set the `TRUST_CERTS` environment variable on your application to a hostname on the other PCF deployment in order for your application to communicate with applications bound to those Service Registry peers:
 
 <pre class="terminal">
 $ cf set-env message-generation TRUST_CERTS api.otherwise.com
