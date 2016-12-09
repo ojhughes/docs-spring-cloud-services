@@ -12,8 +12,8 @@ To update a Config Server service instance's settings, target the org and space 
 <pre class="terminal">
 $ cf target -o myorg -s development
 
-API endpoint:   https://api.cf.wise.com (API version: 2.43.0)
-User:           user
+API endpoint:   https://api.run.pivotal.io (API version: 2.61.0)
+User:           username@example.com
 Org:            myorg
 Space:          development
 </pre>
@@ -73,7 +73,7 @@ To update a service instance, setting the configuration sources and specifying t
 
 <pre class="terminal">
 $ cf update-service config-server -c '{"git": { "uri": "https://github.com/spring-cloud-samples/config-repo", "cloneOnStart": "true", "repos": { "cook": { "pattern": "cook*", "uri": "https://github.com/spring-cloud-samples/cook-config" } } } }'
-Updating service instance config-server as admin...
+Updating service instance config-server as username@example.com...
 OK
 
 Update in progress. Use 'cf services' or 'cf service config-server' to check operation status.
@@ -83,7 +83,7 @@ To update a service instance and set the count of instances for running in high-
 
 <pre class="terminal">
 $ cf update-service config-server -c '{"count": 3}'
-Updating service instance config-server as admin...
+Updating service instance config-server as username@example.com...
 OK
 
 Update in progress. Use 'cf services' or 'cf service config-server' to check operation status.
@@ -101,7 +101,7 @@ Tags:
 Plan: standard
 Description: Config Server for Spring Cloud Applications
 Documentation url: http://docs.pivotal.io/spring-cloud-services/
-Dashboard: https://spring-cloud-broker.apps.wise.com/dashboard/p-config-server/e2615a44-66f5-4fda-9ddc-079af1db9ae4
+Dashboard: https://spring-cloud-broker.wise.com/dashboard/p-config-server/e2615a44-66f5-4fda-9ddc-079af1db9ae4
 
 Last Operation
 Status: update succeeded
@@ -262,7 +262,7 @@ $ cf update-service config-server -c '{"git": { "uri": "https://github.com/sprin
 
 You can configure a Config Server service instance to access configuration sources using an HTTP or HTTPS proxy. To do so, you must provide proxy settings in either of the `git.proxy.http` or `git.proxy.https` JSON objects. You can set the proxy host and port, the proxy username and password (if applicable), and a list of hosts which the Config Server should access outside of the proxy.
 
-<p class='note'><strong>Important</strong>: Config Server for <a href="https://network.pivotal.io/products/pivotal-cf">Pivotal Cloud Foundry</a> does not support use of a private Git repository accessed via an authenticated proxy server as a configuration source at this time.</p>
+<p class='note'><strong>Important</strong>: Config Server does not support use of a private Git repository accessed via an authenticated proxy server as a configuration source at this time.</p>
 
 Settings for an HTTP proxy are set in the `git.proxy.http` object. These might be set as shown in the following JSON:
 

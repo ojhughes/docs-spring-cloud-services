@@ -1,0 +1,72 @@
+---
+title: Upgrading Spring Cloud&reg; Services for Pivotal Cloud Foundry
+owner: Spring Cloud Services
+---
+
+<strong><%= modified_date %></strong>
+
+## <a id="service-instance-upgrade-steps"></a>Service Instance Upgrade Steps
+
+Follow the below steps to upgrade a Spring Cloud Services service instance.
+
+<p class='note'><strong>Important</strong>: If you have client applications which work with Spring Cloud Services 1.0.x service instances and are upgrading these service instances to 1.2.x, you must update your client applications to use the current version of the Spring Cloud Services client dependencies. See the <a href="/spring-cloud-services/service-instance-upgrades.html#client-application-changes-in-1-0-0">Client Application Changes in 1.1.0</a> section of the <a href="/spring-cloud-services/service-instance-upgrades.html">Service Instance Upgrades</a> topic.</p>
+
+<p class='note'><strong>Important</strong>: After upgrading a Circuit Breaker Dashboard service instance from 1.0.x to 1.2.x, you must unbind, rebind, and restart any client applications which were bound to the instance. This is due to a change in how service instance credentials are managed.</p>
+
+Run `cf update-service -c '{"upgrade":true}' SERVICE_NAME`, where `SERVICE_NAME` is the name of a service instance:
+
+<pre class="terminal">
+$ cf update-service -c '{"upgrade": true}' config-server
+Updating service instance config-server as username@example.com...
+OK
+
+Update in progress. Use 'cf services' or 'cf service config-server' to check operation status.
+</pre>
+
+As the output from the command suggests, you can use the `cf services` or `cf service` commands to check the status of the upgrade.
+
+<pre class="terminal">
+$ cf service config-server
+
+Service instance: config-server
+Service: p-config-server
+Bound apps: 
+Tags: 
+Plan: standard
+Description: Config Server for Spring Cloud Applications
+Documentation url: http://docs.pivotal.io/spring-cloud-services/
+Dashboard: https://spring-cloud-service-broker.cfapps.io/dashboard/p-config-server/e5eb4089-8cb8-4bba-a08b-10ba2c7d18e1
+
+Last Operation
+Status: update in progress
+Message: 
+Started: 2016-09-09T18:01:25Z
+Updated: 2016-09-09T18:01:29Z
+</pre>
+
+When the upgrade is complete, `cf service SERVICE_NAME` will report a `status` of `update succeeded`:
+
+<pre class="terminal">
+$ cf service config-server
+
+Service instance: config-server
+Service: p-config-server
+Bound apps: 
+Tags: 
+Plan: standard
+Description: Config Server for Spring Cloud Applications
+Documentation url: http://docs.pivotal.io/spring-cloud-services/
+Dashboard: https://spring-cloud-service-broker.cfapps.io/dashboard/p-config-server/e5eb4089-8cb8-4bba-a08b-10ba2c7d18e1
+
+Last Operation
+Status: update succeeded
+Message: 
+Started: 2016-09-09T18:01:25Z
+Updated: 2016-09-09T18:03:33Z
+</pre>
+
+## <a id="client-application-changes-in-1-0-0"></a>Client Application Changes in 1.1.0
+
+The client dependencies for Spring Cloud Services were restructured in Spring Cloud Services version 1.1.0. In particular, the `spring-cloud-services-starter-parent` has been replaced with a `spring-cloud-services-dependencies` Maven BOM (<a href="https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies">Bill of Materials</a>), which does not include the Spring Cloud or Spring Boot dependency BOMs.
+
+If your client applications are using dependencies corresponding to a 1.0.x version of Spring Cloud Services, you must update them to use the 1.2.x BOM and include the other requisite dependencies. See the <a href="/spring-cloud-services/client-dependencies.html">Client Dependencies</a> topic for details on the current client dependencies.

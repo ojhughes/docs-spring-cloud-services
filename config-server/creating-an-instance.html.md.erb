@@ -5,7 +5,7 @@ owner: Spring Cloud Services
 
 <strong><%= modified_date %></strong>
 
-You can create a Config Server service instance using either the Cloud Foundry Command Line Interface tool (cf CLI) or [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) Apps Manager (you cannot configure a service instance using Apps Manager).
+You can create a Config Server service instance using either the Cloud Foundry Command Line Interface tool (cf CLI) or the PWS Apps Manager (you cannot configure a service instance using Apps Manager).
 
 ## <a id="using-cf-cli"></a>Using the cf CLI
 
@@ -14,8 +14,8 @@ Begin by targeting the correct org and space.
 <pre class="terminal">
 $ cf target -o myorg -s development
 
-API endpoint:   https://api.cf.wise.com (API version: 2.43.0)
-User:           user
+API endpoint:   https://api.run.pivotal.io (API version: 2.61.0)
+User:           username@example.com
 Org:            myorg
 Space:          development
 </pre>
@@ -24,20 +24,18 @@ You can view plan details for the Config Server product using `cf marketplace -s
 
 <pre class="terminal">
 $ cf marketplace
-Getting services from marketplace in org myorg / space development as user...
+Getting services from marketplace in org myorg / space development as username@example.com...
 OK
 
 service                       plans          description
 p-circuit-breaker-dashboard   standard       Circuit Breaker Dashboard for Spring Cloud Applications
 p-config-server               standard       Config Server for Spring Cloud Applications
-p-mysql                       100mb-dev      MySQL service for application development and testing
-p-rabbitmq                    standard       RabbitMQ is a robust and scalable high-performance multi-protocol messaging broker.
 p-service-registry            standard       Service Registry for Spring Cloud Applications
 
 TIP:  Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
 
 $ cf marketplace -s p-config-server
-Getting service plan information for service p-config-server as user...
+Getting service plan information for service p-config-server as username@example.com...
 OK
 
 service plan   description     free or paid
@@ -95,7 +93,7 @@ To create an instance, specifying settings for the configuration sources, that t
 
 <pre class="terminal">
 $ cf create-service -c '{"git": { "uri": "https://github.com/spring-cloud-samples/config-repo", "cloneOnStart": "true", "repos": { "cook": { "pattern": "cook*", "uri": "https://github.com/spring-cloud-samples/cook-config" } } }, "count": 3 }' p-config-server standard config-server
-Creating service instance config-server in org myorg / space development as user...
+Creating service instance config-server in org myorg / space development as username@example.com...
 OK
 
 Create in progress. Use 'cf services' or 'cf service config-server' to check operation status.
@@ -108,23 +106,21 @@ $ cf service config-server
 
 Service instance: config-server
 Service: p-config-server
-Bound apps:
-Tags:
+Bound apps: 
+Tags: 
 Plan: standard
 Description: Config Server for Spring Cloud Applications
 Documentation url: http://docs.pivotal.io/spring-cloud-services/
-Dashboard: https://spring-cloud-broker.apps.wise.com/dashboard/p-config-server/9281c950-9b07-495e-9af4-f9fbd277037d
+Dashboard: https://spring-cloud-service-broker.cfapps.io/dashboard/p-config-server/e5eb4089-8cb8-4bba-a08b-10ba2c7d18e1
 
 Last Operation
 Status: create succeeded
-Message:
-Started: 2016-06-24T21:57:21Z
-Updated: 2016-06-24T21:59:24Z
+Message: 
+Started: 2016-09-09T16:51:15Z
+Updated: 2016-09-09T16:53:19Z
 </pre>
 
 <p class='note'><strong>Important</strong>: The <code>cf service</code> and <code>cf services</code> commands may report a <code>create succeeded</code> status even if the Config Server cannot initialize using the provided settings. For example, given an invalid URI for a configuration source, the service instance may still be created and have a <code>create succeeded</code> status. <br /> <br /> If the service instance does not appear to be functioning correctly, you can visit its dashboard to double-check that the provided settings are valid and accurate. See the <a href="/spring-cloud-services/config-server/using-the-dashboard.html">Using the Dashboard</a> topic.</p>
-
-<p class='note'><strong>Note</strong>: You may notice a discrepancy between the status given for a service instance by the cf CLI (e.g., by the <code>cf service</code> command) versus that shown on the <a href="/spring-cloud-services/operator-information.html#service-instances-dashboard">Service Instances dashboard</a>. The dashboard is updated frequently (close to real-time); the status retrieved by the cf CLI is not updated as frequently and may take time to match the dashboard.</p>
 
 ### <a id="ssh-repository-access"></a>SSH Repository Access
 
@@ -274,7 +270,7 @@ $ cf create-service p-config-server standard config-server -c '{"git": { "uri": 
 
 You can configure a Config Server service instance to access configuration sources using an HTTP or HTTPS proxy. To do so, you must provide proxy settings in either of the `git.proxy.http` or `git.proxy.https` JSON objects. You can set the proxy host and port, the proxy username and password (if applicable), and a list of hosts which the Config Server should access outside of the proxy.
 
-<p class='note'><strong>Important</strong>: Config Server for <a href="https://network.pivotal.io/products/pivotal-cf">Pivotal Cloud Foundry</a> does not support use of a private Git repository accessed via an authenticated proxy server as a configuration source at this time.</p>
+<p class='note'><strong>Important</strong>: Config Server does not support use of a private Git repository accessed via an authenticated proxy server as a configuration source at this time.</p>
 
 Settings for an HTTP proxy are set in the `git.proxy.http` object. These might be set as shown in the following JSON:
 
@@ -333,9 +329,13 @@ Provide a name for the service instance (for example, "config-server"). Click th
 
    <%= image_tag("config-server/instance_name.png") %>
 
-In the **Services** list, click the **Manage** link under the listing for the new service instance.
+In the **Services** section of the space in Apps Manager, click the listing for the new service instance.
 
    <%= image_tag("config-server/service_successfully_added.png") %>
+
+Click the **Manage** link.
+
+   <%= image_tag("config-server/5_manage_link.png") %>
 
 It may take a few minutes to provision the service instance; while it is being provisioned, you will see a "The service instance is initializing" message. When the instance is ready, its dashboard will load automatically.
 

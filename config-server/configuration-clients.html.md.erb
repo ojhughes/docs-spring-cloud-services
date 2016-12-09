@@ -23,7 +23,7 @@ Alternatively, you can use the Cloud Foundry Command Line Interface tool (cf CLI
 
 <pre class="terminal">
 $ cf bind-service cook config-server
-Binding service config-server to app cook in org myorg / space development as admin...
+Binding service config-server to app cook in org myorg / space development as username@example.com...
 OK
 TIP: Use 'cf restage cook' to ensure your env variable changes take effect
 </pre>
@@ -32,7 +32,7 @@ Then, as the command output suggests, run the command `cf restage` to restage th
 
 <pre class="terminal">
 $ cf restage cook
-Restaging app cook in org myorg / space development as admin...
+Restaging app cook in org myorg / space development as username@example.com...
 ...
 </pre>
 
@@ -42,7 +42,7 @@ After an application is bound to the service instance, the application's `VCAP_S
 
 <pre class="terminal">
 $ cf env cook
-Getting env variables for app cook in org myorg / space development as admin...
+Getting env variables for app cook in org myorg / space development as username@example.com...
 OK
 
 System-Provided:
@@ -51,18 +51,21 @@ System-Provided:
   "p-config-server": [
    {
     "credentials": {
-     "access_token_uri": "https://p-spring-cloud-services.uaa.cf.wise.com/oauth/token",
-     "client_id": "p-config-server-c4a56a3d-9507-4c2f-9cd1-f858dbf9e11c",
-     "client_secret": "9aGx9K5Vx0cM",
-     "uri": "https://config-51711835-4626-4823-b5a1-e5d91012f3f2.apps.wise.com"
+     "access_token_uri": "https://p-spring-cloud-services.uaa.run.pivotal.io/oauth/token",
+     "client_id": "p-config-server-4ebaaac6-b6ab-4ce5-9565-94b95ff6ba65",
+     "client_secret": "cWZ8mEqauaAi",
+     "uri": "https://config-e5eb4089-8cb8-4bba-a08b-10ba2c7d18e1.cfapps.io"
     },
     "label": "p-config-server",
     "name": "config-server",
     "plan": "standard",
+    "provider": null,
+    "syslog_drain_url": null,
     "tags": [
      "configuration",
      "spring-cloud"
-    ]
+    ],
+    "volume_mounts": []
    }
   ]
  }

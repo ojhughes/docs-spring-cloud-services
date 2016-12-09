@@ -5,9 +5,13 @@ owner: Spring Cloud Services
 
 <strong><%= modified_date %></strong>
 
-To find the dashboard, navigate in Pivotal Cloud Foundry&reg; Apps Manager to the Config Server service instance's space, click the listing for the service instance, and then click **Manage**.
+To find the dashboard, navigate in the PWS Apps Manager to the **Services** tab in the Config Server service instance's space, then click the listing for the service instance.
 
-<%= image_tag("config-server/cs_manage_link.png") %>
+<%= image_tag("config-server/service-instance-listing.png") %>
+
+Click **Manage**.
+
+<%= image_tag("config-server/5_manage_link.png") %>
 
 If you are using version 6.8.0 or later of the Cloud Foundry Command Line Interface tool (cf CLI), you can also use `cf service SERVICE_NAME`, where `SERVICE_NAME` is the name of the Config Server service instance:
 
@@ -16,18 +20,18 @@ $ cf service config-server
 
 Service instance: config-server
 Service: p-config-server
-Bound apps:
-Tags:
+Bound apps: 
+Tags: 
 Plan: standard
 Description: Config Server for Spring Cloud Applications
 Documentation url: http://docs.pivotal.io/spring-cloud-services/
-Dashboard: https://spring-cloud-broker.apps.wise.com/dashboard/p-config-server/650fd967-4e8e-4590-81a0-a029866184a2
+Dashboard: https://spring-cloud-service-broker.cfapps.io/dashboard/p-config-server/e5eb4089-8cb8-4bba-a08b-10ba2c7d18e1
 
 Last Operation
 Status: update succeeded
-Message:
-Started: 2016-06-27T14:30:23Z
-Updated: 2016-06-27T14:32:30Z
+Message: 
+Started: 2016-09-09T17:45:34Z
+Updated: 2016-09-09T17:47:39Z
 </pre>
 
 Visit the URL given for "Dashboard".

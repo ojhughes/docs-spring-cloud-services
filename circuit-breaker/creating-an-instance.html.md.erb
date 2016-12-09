@@ -5,7 +5,7 @@ owner: Spring Cloud Services
 
 <strong><%= modified_date %></strong>
 
-You can create a Circuit Breaker Dashboard service instance using either the Cloud Foundry Command Line Interface tool (cf CLI) or [Pivotal Cloud Foundry](https://network.pivotal.io/products/pivotal-cf) (PCF) Apps Manager.
+You can create a Circuit Breaker Dashboard service instance using either the Cloud Foundry Command Line Interface tool (cf CLI) or the PWS Apps Manager.
 
 ## <a id="using-cf-cli"></a>Using the cf CLI
 
@@ -14,8 +14,8 @@ Begin by targeting the correct org and space.
 <pre class="terminal">
 $ cf target -o myorg -s development
 
-API endpoint:   https://api.cf.wise.com (API version: 2.43.0)
-User:           user
+API endpoint:   https://api.run.pivotal.io (API version: 2.61.0)
+User:           username@example.com
 Org:            myorg
 Space:          development
 </pre>
@@ -25,20 +25,18 @@ If desired, view plan details for the Circuit Breaker Dashboard product using
 
 <pre class="terminal">
 $ cf marketplace
-Getting services from marketplace in org myorg / space development as user...
+Getting services from marketplace in org myorg / space development as username@example.com...
 OK
 
 service                       plans          description
 p-circuit-breaker-dashboard   standard       Circuit Breaker Dashboard for Spring Cloud Applications
 p-config-server               standard       Config Server for Spring Cloud Applications
-p-mysql                       100mb-dev      MySQL service for application development and testing
-p-rabbitmq                    standard       RabbitMQ is a robust and scalable high-performance multi-protocol messaging broker.
 p-service-registry            standard       Service Registry for Spring Cloud Applications
 
 TIP:  Use 'cf marketplace -s SERVICE' to view descriptions of individual plans of a given service.
 
 $ cf marketplace -s p-circuit-breaker-dashboard
-Getting service plan information for service p-circuit-breaker-dashboard as user...
+Getting service plan information for service p-circuit-breaker-dashboard as username@example.com...
 OK
 
 service plan   description     free or paid
@@ -49,7 +47,7 @@ Run `cf create-service`, specifying the service, plan name, and instance name.
 
 <pre class="terminal">
 $ cf create-service p-circuit-breaker-dashboard standard circuit-breaker-dashboard
-Creating service instance circuit-breaker-dashboard in org myorg / space development as admin...
+Creating service instance circuit-breaker-dashboard in org myorg / space development as username@example.com...
 OK
 
 Create in progress. Use 'cf services' or 'cf service circuit-breaker-dashboard' to check operation status.
@@ -67,18 +65,16 @@ Tags:
 Plan: standard
 Description: Circuit Breaker Dashboard for Spring Cloud&reg; Applications
 Documentation url: http://docs.pivotal.io/spring-cloud-services/
-Dashboard: https://spring-cloud-broker.apps.wise.com/dashboard/p-circuit-breaker-dashboard/97869d78-5d4e-410b-9c71-bb622ca49f7d
+Dashboard: https://spring-cloud-service-broker.cfapps.io/dashboard/p-circuit-breaker-dashboard/7622a02c-99e5-4e99-aab5-b88ada858560
 
 Last Operation
 Status: create succeeded
-Message:
-Started: 2016-06-29T19:13:13Z
-Updated: 2016-06-29T19:16:19Z
+Message: 
+Started: 2016-09-09T14:25:07Z
+Updated: 
 </pre>
 
-<p class='note'><strong>Note</strong>: You may notice a discrepancy between the status given for a service instance by the cf CLI (e.g., by the <code>cf service</code> command) versus that shown on the <a href="/spring-cloud-services/operator-information.html#service-instances-dashboard">Service Instances dashboard</a>. The dashboard is updated frequently (close to real-time); the status retrieved by the cf CLI is not updated as frequently and may take time to match the dashboard.</p>
-
-## <a id="using-apps-manager"></a>Using Apps Manager
+## Using Apps Manager
 
 Log into Apps Manager as a Space Developer. In the Marketplace, select **Circuit Breaker**.
 
